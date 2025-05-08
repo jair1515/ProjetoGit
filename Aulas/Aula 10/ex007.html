@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Somando valores</title>
+
+  <style>
+    body {
+      font: normal 18pt Arial;
+      position: relative;
+    }
+
+    input {
+      font: normal 18pt Arial;
+      width: 100px;
+    }
+
+    .erro {
+      background-color: #ffcccc;
+    }
+
+    /* Estilo do resultado grande */
+    #res strong {
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    /* Animação de cores (pisca) */
+    @keyframes piscarCores {
+      0%   { color: red; }
+      25%  { color: orange; }
+      50%  { color: yellow; }
+      75%  { color: green; }
+      100% { color: blue; }
+    }
+
+    /* Animação de aumento e diminuição de tamanho */
+    @keyframes aumentarDiminuir {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    /* Classe que aplica as animações */
+    .colorido-movendo {
+      position: absolute;
+      animation: piscarCores 1s infinite, aumentarDiminuir 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <h1>Somando os valores</h1>
+  <input type="number" name="number" id="txtn1"> + 
+  <input type="number" name="number" id="txtn2">
+  <input type="button" value="Somar" onclick="somar()">
+  <div id="res">Resultado</div>
+
+  <script>
+    const tn1 = document.getElementById('txtn1');
+    const tn2 = document.getElementById('txtn2');
+    const res = document.getElementById('res');
+
+    let resultElement; // Variável para armazenar o elemento de resultado
+
+    // Remover a classe de erro assim que o usuário digitar algo
+    tn1.addEventListener('input', () => {
+      if (tn1.value !== "") {
+        tn1.classList.remove('erro');
+      }
+    });
+
+    tn2.addEventListener('input', () => {
+      if (tn2.value !== "") {
+        tn2.classList.remove('erro');
+      }
+    });
+
+    function somar() {
+      const n1 = tn1.value;
+      const n2 = tn2.value;
+
+      // Verifica se os campos estão vazios
+      if (n1 === "" || n2 === "") {
+        res.innerHTML = "<strong>Erro: preencha os dois campos com números válidos.</strong>";
+        if (n1 === "") tn1.classList.add('erro');
+        if (n2 === "") tn2.classList.add('erro');
+        return;
+      }
+
+      const soma = Number(n1) + Number(n2);
+
+      // Cria um novo elemento para exibir o resultado que segue o mouse
+      resultElement = document.createElement('strong');
+      resultElement.classList.add('colorido-movendo');
+      resultElement.textContent = `A soma dos valore é ${soma}`;
+
+      // Adiciona o resultado ao div "res"
+      res.innerHTML = 'Resultado: ';
+      res.appendChild(resultElement);
+
+      // Ativa o movimento do número com base na posição do mouse
+      document.addEventListener('mousemove', moveNumber);
+    }
+
+    // Função para mover o número junto com o mouse
+    function moveNumber(event) {
+      // Calcula a posição do número baseado nas coordenadas do mouse
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // Move o número para a posição do mouse
+      resultElement.style.left = `${x}px`;
+      resultElement.style.top = `${y}px`;
+
+      // Faz o número aumentar e diminuir de acordo com a distância do mouse
+      const distance = Math.sqrt(Math.pow(x - window.innerWidth / 2, 2) + Math.pow(y - window.innerHeight / 2, 2));
+      const scale = 1 + (distance / 1000); // Ajuste o fator de escala conforme necessário
+      resultElement.style.transform = `scale(${scale})`;
+    }
+  </script>
+</body>
+</html>

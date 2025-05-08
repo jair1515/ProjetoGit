@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Na prática</title>
+</head>
+<body>
+  <h1>Informe sua data de nascimento</h1>
+  <input type="date" name="data" id="data"> 
+  <input type="button" value="Verificar" onclick="verificar()">
+  <div id="res">Você tem:</div>
+
+  <script>
+    function verificar() {
+      const input = document.getElementById('data');
+      const res = document.getElementById('res');
+      const dataNascStr = input.value;
+
+      if (dataNascStr === "") {
+        res.innerHTML = "Por favor, informe sua data de nascimento.";
+        return;
+      }
+
+      // Corrigindo a data para não ter erro de fuso horário
+      const [ano, mes, dia] = dataNascStr.split('-');
+      const dataNasc = new Date(Date.UTC(ano, mes - 1, dia));
+
+      const hoje = new Date();
+      const anoAtual = hoje.getFullYear();
+
+      let idade = anoAtual - dataNasc.getUTCFullYear();
+
+      const aniversarioEsteAno = new Date(Date.UTC(anoAtual, dataNasc.getUTCMonth(), dataNasc.getUTCDate()));
+      const hojeUTC = new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()));
+
+      if (hojeUTC < aniversarioEsteAno) {
+        idade--;
+      }
+
+      const diaFormatado = String(dataNasc.getUTCDate()).padStart(2, '0');
+      const mesFormatado = String(dataNasc.getUTCMonth() + 1).padStart(2, '0');
+
+      res.innerHTML = `Você tem <strong>${idade}</strong> anos. Seu aniversário é dia <strong>${diaFormatado}/${mesFormatado}</strong>.`;
+    }
+  </script>
+</body>
+</html>
