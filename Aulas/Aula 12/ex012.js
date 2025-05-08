@@ -1,5 +1,6 @@
-var hora = 10
-onslotchange.log(`Agora são exatamente ${hora} horas!`)
+var agora = new Date()
+var hora = agora.getHours()
+console.log(`Agora são exatamente ${hora} horas!`)
 if (hora <= 4) {
     console.log('Boa madrugada')
 } else if (hora <= 12) {
