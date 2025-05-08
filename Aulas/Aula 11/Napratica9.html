@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passaporte</title>
+</head>
+<body>
+    <h1>Entrada ao Brasil.</h1>
+   Qual o seu país de nascensa? <input type="text" name="pais" id="pais">
+   <input type="button" value="Verificar" onclick="verificar()">
+   <div id="res"></div>
+
+   <script>
+    function verificar() {
+        var p = document.querySelector("input#pais")
+        var res = document.querySelector('div#res')
+        var pais = (p.value)
+        res.innerHTML = `<p>Voce mora ${pais}<p>`
+            if (pais == "Brasil"){
+        res.innerHTML = "<p>Você é <strong>Brasileiro</strong> está de volta a seu pais.<p>"
+    } else {
+        res.innerHTML = "<p>Você é <strong>ESTRANGEIRO</strong> procure o seu consulado</p>"
+    }
+        }
+   </script>
+</body>
+</html>
