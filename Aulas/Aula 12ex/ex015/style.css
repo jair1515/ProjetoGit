@@ -25,3 +25,12 @@ footer {
     font-style: italic;
 
 }
+
+#foto{ 
+     padding-top: 15px; 
+    width: 250px;  
+    height: 250px;
+    border-radius: 80%;
+    object-fit: cover;
+    object-position: center 55%; 
+    }
